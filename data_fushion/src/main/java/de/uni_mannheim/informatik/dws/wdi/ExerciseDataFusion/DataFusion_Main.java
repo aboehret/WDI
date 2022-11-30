@@ -1,25 +1,17 @@
 package de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion;
 
 import java.io.File;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
-import java.time.temporal.ChronoField;
-import java.util.Locale;
 
-import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation.ActorsEvaluationRule;
-import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation.DateEvaluationRule;
-import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation.DirectorEvaluationRule;
-import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation.TitleEvaluationRule;
-import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.ActorsFuserUnion;
-import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.DateFuserFavourSource;
-import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.DateFuserVoting;
-import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.DirectorFuserLongestString;
-import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.TitleFuserShortestString;
-import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.model.FusibleMovieFactory;
-import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.model.Movie;
-import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.model.MovieXMLFormatter;
-import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.model.MovieXMLReader;
+import org.slf4j.Logger;
+
+import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation.CityEvaluationRule;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation.NameEvaluationRule;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.CityFuserLongestString;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.CityFuserVoting;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.NameFuserLongestString;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.model.Restaurant;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.model.RestaurantXMLFormatter;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.model.RestaurantXMLReader;
 import de.uni_mannheim.informatik.dws.winter.datafusion.CorrespondenceSet;
 import de.uni_mannheim.informatik.dws.winter.datafusion.DataFusionEngine;
 import de.uni_mannheim.informatik.dws.winter.datafusion.DataFusionEvaluator;
@@ -30,9 +22,8 @@ import de.uni_mannheim.informatik.dws.winter.model.FusibleHashedDataSet;
 import de.uni_mannheim.informatik.dws.winter.model.RecordGroupFactory;
 import de.uni_mannheim.informatik.dws.winter.model.defaultmodel.Attribute;
 import de.uni_mannheim.informatik.dws.winter.utils.WinterLogManager;
-import org.slf4j.Logger;
 
-public class DataFusion_Main 
+public class Restaurant_DataFusion 
 {
 	/*
 	 * Logging Options:
@@ -53,71 +44,62 @@ public class DataFusion_Main
     {
 		// Load the Data into FusibleDataSet
 		logger.info("*\tLoading datasets\t*");
-		FusibleDataSet<Movie, Attribute> ds1 = new FusibleHashedDataSet<>();
-		new MovieXMLReader().loadFromXML(new File("data/input/academy_awards.xml"), "/movies/movie", ds1); // path of the data set
+		FusibleDataSet<Restaurant, Attribute> ds1 = new FusibleHashedDataSet<>();
+		new RestaurantXMLReader().loadFromXML(new File("data/input/michelin1_small.xml"), "/restaurants/restaurant", ds1); // path of the data set
 		ds1.printDataSetDensityReport(); // this gives the data set density report
 
-		FusibleDataSet<Movie, Attribute> ds2 = new FusibleHashedDataSet<>();
-		new MovieXMLReader().loadFromXML(new File("data/input/actors.xml"), "/movies/movie", ds2);
+		FusibleDataSet<Restaurant, Attribute> ds2 = new FusibleHashedDataSet<>();
+		new RestaurantXMLReader().loadFromXML(new File("data/input/michelin2_small.xml"), "/restaurants/restaurant", ds2);
 		ds2.printDataSetDensityReport();
 
-		FusibleDataSet<Movie, Attribute> ds3 = new FusibleHashedDataSet<>();
-		new MovieXMLReader().loadFromXML(new File("data/input/golden_globes.xml"), "/movies/movie", ds3);
+		FusibleDataSet<Restaurant, Attribute> ds3 = new FusibleHashedDataSet<>();
+		new RestaurantXMLReader().loadFromXML(new File("data/input/michelin3_small.xml"), "/restaurants/restaurant", ds3);
 		ds3.printDataSetDensityReport();
 		
-		System.out.println(ds1.size());
-		System.out.println(ds2.size());
-		System.out.println(ds3.size());
+//		System.out.println(ds1.size());
+//		System.out.println(ds2.size());
+//		System.out.println(ds3.size());
+		
+		
 
 		// Maintain Provenance
 		// Scores (e.g. from rating)
 		ds1.setScore(1.0);
-		ds2.setScore(2.0);
-		ds3.setScore(3.0);
+		ds2.setScore(3.0);
+		ds3.setScore(2.0);
 
-		// Date (e.g. last update) Movie this is a special case
-		DateTimeFormatter formatter = new DateTimeFormatterBuilder()
-		        .appendPattern("yyyy-MM-dd")
-		        .parseDefaulting(ChronoField.CLOCK_HOUR_OF_DAY, 0)
-		        .parseDefaulting(ChronoField.MINUTE_OF_HOUR, 0)
-		        .parseDefaulting(ChronoField.SECOND_OF_MINUTE, 0)
-		        .toFormatter(Locale.ENGLISH);
-		
-		ds1.setDate(LocalDateTime.parse("2012-01-01", formatter));
-		ds2.setDate(LocalDateTime.parse("2010-01-01", formatter));
-		ds3.setDate(LocalDateTime.parse("2008-01-01", formatter));
 
 		// load correspondences
 		logger.info("*\tLoading correspondences\t*");
-		CorrespondenceSet<Movie, Attribute> correspondences = new CorrespondenceSet<>();
-		correspondences.loadCorrespondences(new File("data/correspondences/academy_awards_2_actors_correspondences.csv"),ds1, ds2);
-		correspondences.loadCorrespondences(new File("data/correspondences/actors_2_golden_globes_correspondences.csv"),ds2, ds3);
+		CorrespondenceSet<Restaurant, Attribute> correspondences = new CorrespondenceSet<>();
+		correspondences.loadCorrespondences(new File("data/correspondences/michelin_tripadvisor_correspondences1.csv"),ds1, ds2);
+		correspondences.loadCorrespondences(new File("data/correspondences/bookuber_tripadvisor_correspondences1.csv"),ds2, ds3);
 
 		// write group size distribution
 		correspondences.printGroupSizeDistribution(); // aggregated for group size distribution
 
 		// load the gold standard
 		logger.info("*\tEvaluating results\t*");
-		DataSet<Movie, Attribute> gs = new FusibleHashedDataSet<>();
-		new MovieXMLReader().loadFromXML(new File("data/goldstandard/gold.xml"), "/movies/movie", gs);
+		DataSet<Restaurant, Attribute> gs = new FusibleHashedDataSet<>();
+		new RestaurantXMLReader().loadFromXML(new File("data/goldstandard/test.xml"), "/restaurants/restaurant", gs);
 
-		for(Movie m : gs.get()) {
+		for(Restaurant m : gs.get()) {
 			logger.info(String.format("gs: %s", m.getIdentifier()));
 		}
 
 		// define the fusion strategy
-		DataFusionStrategy<Movie, Attribute> strategy = new DataFusionStrategy<>(new MovieXMLReader());
+		DataFusionStrategy<Restaurant, Attribute> strategy = new DataFusionStrategy<>(new RestaurantXMLReader());
 		// write debug results to file
 		strategy.activateDebugReport("data/output/debugResultsDatafusion.csv", -1, gs);
 		
 		// add attribute fusers // these are the fusers we want
-		strategy.addAttributeFuser(Movie.TITLE, new TitleFuserShortestString(),new TitleEvaluationRule());
-		strategy.addAttributeFuser(Movie.DIRECTOR,new DirectorFuserLongestString(), new DirectorEvaluationRule());
-		strategy.addAttributeFuser(Movie.DATE, new DateFuserFavourSource(),new DateEvaluationRule());
-		strategy.addAttributeFuser(Movie.ACTORS,new ActorsFuserUnion(),new ActorsEvaluationRule());
+		strategy.addAttributeFuser(Restaurant.NAME, new NameFuserLongestString(),new NameEvaluationRule());
+		strategy.addAttributeFuser(Restaurant.CITY,new CityFuserVoting(), new CityEvaluationRule()); // Voting because
+//		strategy.addAttributeFuser(Movie.DATE, new DateFuserFavourSource(),new DateEvaluationRule());
+//		strategy.addAttributeFuser(Movie.ACTORS,new ActorsFuserUnion(),new ActorsEvaluationRule());
 		
 		// create the fusion engine
-		DataFusionEngine<Movie, Attribute> engine = new DataFusionEngine<>(strategy);
+		DataFusionEngine<Restaurant, Attribute> engine = new DataFusionEngine<>(strategy);
 
 		// print consistency report
 		engine.printClusterConsistencyReport(correspondences, null);
@@ -128,13 +110,13 @@ public class DataFusion_Main
 
 		// run the fusion
 		logger.info("*\tRunning data fusion\t*");
-		FusibleDataSet<Movie, Attribute> fusedDataSet = engine.run(correspondences, null);
+		FusibleDataSet<Restaurant, Attribute> fusedDataSet = engine.run(correspondences, null);
 
 		// write the result
-		new MovieXMLFormatter().writeXML(new File("data/output/fused.xml"), fusedDataSet);
+		new RestaurantXMLFormatter().writeXML(new File("data/output/fused.xml"), fusedDataSet);
 
 		// evaluate
-		DataFusionEvaluator<Movie, Attribute> evaluator = new DataFusionEvaluator<>(strategy, new RecordGroupFactory<Movie, Attribute>());
+		DataFusionEvaluator<Restaurant, Attribute> evaluator = new DataFusionEvaluator<>(strategy, new RecordGroupFactory<Restaurant, Attribute>());
 		
 		double accuracy = evaluator.evaluate(fusedDataSet, gs, null);
 
@@ -143,3 +125,4 @@ public class DataFusion_Main
 		
     }
 }
+
