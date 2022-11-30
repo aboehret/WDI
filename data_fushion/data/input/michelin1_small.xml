@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<restaurants xsi:noNamespaceSchemaLocation="file:///C:/Users/Phili/Desktop/Alicia/WDI/target_schema.xml.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<restaurant>
+		<id>michelin_1</id>
+		<name>les amis</name>
+		<cuisine>french</cuisine>
+		<facilitiesandservices>air conditioning,american express credit card,car park,china unionpay,credit card / debit card accepted,diners club credit card,jcb,mastercard credit card,particularly interesting wine list,restaurant offering vegetarian menus,valet parking,visa credit card,wheelchair access</facilitiesandservices>
+		<contact>
+			<telephone>+6567332225</telephone>
+			<website>https://www.lesamis.com.sg/</website>
+		</contact>
+		<openinghours>None</openinghours>
+		<location>
+			<country>singapore</country>
+			<city>singaporeee</city>
+			<postalcode>228208</postalcode>
+			<street>shaw centre #01-16 1 scotts road </street>
+			<region>None</region>
+			<province>None</province>
+			<geographiclocation>
+				<latitude>1.30626</latitude>
+				<longitude>103.83204</longitude>
+			</geographiclocation>
+		</location>
+		<ratings>
+			<reviewcount>None</reviewcount>
+			<rating>None</rating>
+			<award>3 michelin stars</award>
+			<reviews>None</reviews>
+		</ratings>
+		<price>
+			<currency>sgd</currency>
+			<pricerange>None</pricerange>
+			<minprice>225</minprice>
+			<maxprice>460</maxprice>
+		</price>
+	</restaurant>
+	<restaurant>
+		<id>michelin_2</id>
+		<name>odette</name>
+		<cuisine>french contemporary</cuisine>
+		<facilitiesandservices>air conditioning,american express credit card,car park,credit card / debit card accepted,diners club credit card,jcb,maestro,mastercard credit card,particularly interesting wine list,restaurant offering vegetarian menus,visa credit card,wheelchair access</facilitiesandservices>
+		<contact>
+			<telephone>+6563850498</telephone>
+			<website>http://www.odetterestaurant.com</website>
+		</contact>
+		<openinghours>None</openinghours>
+		<location>
+			<country>singapore</country>
+			<city>singapore</city>
+			<postalcode>178957</postalcode>
+			<street>national gallery #01-04 1 st. andrew's road (entrance via supreme court wing's foyer) </street>
+			<region>None</region>
+			<province>None</province>
+			<geographiclocation>
+				<latitude>1.2896459</latitude>
+				<longitude>103.8516</longitude>
+			</geographiclocation>
+		</location>
+		<ratings>
+			<reviewcount>None</reviewcount>
+			<rating>None</rating>
+			<award>3 michelin stars</award>
+			<reviews>None</reviews>
+		</ratings>
+		<price>
+			<currency>sgd</currency>
+			<pricerange>None</pricerange>
+			<minprice>298</minprice>
+			<maxprice>428</maxprice>
+		</price>
+	</restaurant>
+</restaurants>

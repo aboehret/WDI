@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ~ Copyright (c) 2017 Data and Web Science Group, University of Mannheim, 
+	Germany (http://dws.informatik.uni-mannheim.de/) ~ ~ Licensed under the Apache 
+	License, Version 2.0 (the "License"); you may not use this file except in 
+	compliance with the License. ~ You may obtain a copy of the License at ~ 
+	~ http://www.apache.org/licenses/LICENSE-2.0 ~ ~ Unless required by applicable 
+	law or agreed to in writing, software distributed under the License is distributed 
+	on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either 
+	express or implied. ~ See the License for the specific language governing 
+	permissions and limitations under the License. -->
+
+<restaurants>
+	<restaurant>
+		<id>michelin_1</id>
+		<name>les amis</name>
+		<cuisine>modern cuisine, creative</cuisine>
+		<facilitiesandservices>air conditioning,american express credit
+			card,credit card / debit card accepted,mastercard credit
+			card,particularly interesting wine list,restaurant offering
+			vegetarian menus,visa credit card,wheelchair access
+		</facilitiesandservices>
+		<contact>
+			<telephone>+33 254206230</telephone>
+			<website>https://www.lamaisondacote.fr/</website>
+		</contact>
+		<openinghours>none</openinghours>
+		<location>
+			<country>singapore</country>
+			<city>montlivault</city>
+			<postalcode>41350</postalcode>
+			<street>17 rue de chambord</street>
+			<region>none</region>
+			<province>none</province>
+			<geographiclocation>
+				<latitude>47.641103</latitude>
+				<longitude>1.445182</longitude>
+			</geographiclocation>
+		</location>
+		<ratings>
+			<reviewcount>24</reviewcount>
+			<rating>4.79</rating>
+			<award>2 michelin stars</award>
+			<reviews>none</reviews>
+		</ratings>
+		<price>
+			<currency>eur</currency>
+			<pricerange>57 €</pricerange>
+			<minprice>57</minprice>
+			<maxprice>218</maxprice>
+		</price>
+	</restaurant>
+
+	<restaurant>
+		<id>michelin_2</id>
+<!-- 		<city>singapore</city> -->
+		<name>speisemeisterei burgthalschenke</name>
+		<cuisine>classic cuisine, country cooking</cuisine>
+		<facilitiesandservices>car park,credit card / debit card
+			accepted,mastercard credit card,terrace,visa credit card
+		</facilitiesandservices>
+		<contact>
+			<telephone>+49 73065265</telephone>
+			<website>http://speisemeisterei-burgthalschenke.de//</website>
+		</contact>
+		<openinghours>dienstag: 12:00 - 14:00 18:00 - 21:30 mittwoch: 12:00 -
+			14:00 18:00 - 21:30 donnerstag: 12:00 - 14:00 18:00 - 21:30 freitag:
+			12:00 - 14:00 18:00 - 21:30 samstag: 12:00 - 14:00 18:00 - 21:30
+			sonntag: 11:30 - 14:00 18:00 - 20:30</openinghours>
+		<location>
+			<country>germany</country>
+			<city>vöhringen</city>
+			<postalcode>89269</postalcode>
+			<street>untere hauptstraße 4</street>
+			<region>bayern</region>
+			<province>none</province>
+			<geographiclocation>
+				<latitude>48.288128</latitude>
+				<longitude>10.099359</longitude>
+			</geographiclocation>
+		</location>
+		<ratings>
+			<reviewcount>none</reviewcount>
+			<rating>none</rating>
+			<award>bib gourmand</award>
+			<reviews>none</reviews>
+		</ratings>
+		<price>
+			<currency>eur</currency>
+			<pricerange>none</pricerange>
+			<minprice>29</minprice>
+			<maxprice>61</maxprice>
+		</price>
+	</restaurant>
+
+	<restaurant>
+		<id>michelin_45</id>
+		<name>zak the baker</name>
+		<cuisine>breakfast and brunch, kosher, cafe, bakery, family friendly
+		</cuisine>
+		<facilitiesandservices>air conditioning,brunch,credit card / debit
+			card accepted</facilitiesandservices>
+		<contact>
+			<telephone>+17862940876</telephone>
+			<website>https://zakthebaker.com/</website>
+		</contact>
+		<openinghours>none</openinghours>
+		<location>
+			<country>usa</country>
+			<city>miami</city>
+			<postalcode>33127</postalcode>
+			<street>295 nw 26th st</street>
+			<region>fl</region>
+			<province>none</province>
+			<geographiclocation>
+				<latitude>25.801518</latitude>
+				<longitude>-80.200994</longitude>
+			</geographiclocation>
+		</location>
+		<ratings>
+			<reviewcount>500</reviewcount>
+			<rating>4.8</rating>
+			<award>bib gourmand</award>
+			<reviews>none</reviews>
+		</ratings>
+		<price>
+			<currency>usd</currency>
+			<pricerange>$</pricerange>
+			<minprice>25</minprice>
+			<maxprice>25</maxprice>
+		</price>
+	</restaurant>
+</restaurants>
