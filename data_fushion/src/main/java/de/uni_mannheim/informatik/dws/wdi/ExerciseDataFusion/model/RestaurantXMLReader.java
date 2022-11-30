@@ -77,6 +77,9 @@ public class RestaurantXMLReader extends XMLMatchableReader<Restaurant, Attribut
 		String streetName = getNonNullValueInLowerCase(getValueFromInsideChildElement(node, "location", "street"));
 		streetName = streetName.replace("-", "");
 		restaurant.setStreet(streetName);
+
+		String latitude = getNonNullValueInLowerCase(getValueFromInsideChildOfChildElement(node, "location", "geographiclocation","latitude"));
+		System.out.println("latitude"+latitude);
 		
 		
 		System.out.println(id+" "+restaurant.getName()+" "+restaurant.getPostalcode()+" "+restaurant.getCountry());
@@ -113,6 +116,54 @@ public class RestaurantXMLReader extends XMLMatchableReader<Restaurant, Attribut
 						return innerChild.getTextContent().trim();
 					}
 				}
+			}
+		}
+
+		return null;
+	}
+
+	public String getValueFromInsideChildOfChildElement(Node node, String childName, String ChildOfChildName, String ChildOfChildOfChildName) {
+
+		// get all child nodes
+		NodeList children = node.getChildNodes();
+
+		// iterate over the child nodes until the node with childName is found
+		for (int j = 0; j < children.getLength(); j++) {
+			Node child = children.item(j);
+			// check the node type and the name
+			if (child.getNodeType() == org.w3c.dom.Node.ELEMENT_NODE && child.getNodeName().equals(childName))
+			{
+
+				NodeList childrenofChild = child.getChildNodes();
+				for (int i = 0; i < childrenofChild.getLength(); i++)
+				{
+					Node innerChild = childrenofChild.item(i);
+
+					if (innerChild.getNodeType() == org.w3c.dom.Node.ELEMENT_NODE
+							&& innerChild.getNodeName().equals(ChildOfChildName))
+					{
+
+								NodeList childrenofChildofChild = innerChild.getChildNodes();
+
+								for (int k = 0;k < childrenofChildofChild.getLength(); k++)
+								{
+									Node innerOfInnerChild = childrenofChildofChild.item(k);
+
+									if (innerOfInnerChild.getNodeType() == org.w3c.dom.Node.ELEMENT_NODE
+											&& innerOfInnerChild.getNodeName().equals(ChildOfChildOfChildName))
+									{
+												return innerOfInnerChild.getTextContent().trim();
+
+									}
+								}
+					}
+
+				}
+
+
+
+
+
 			}
 		}
 

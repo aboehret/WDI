@@ -23,7 +23,7 @@ import de.uni_mannheim.informatik.dws.winter.model.RecordGroupFactory;
 import de.uni_mannheim.informatik.dws.winter.model.defaultmodel.Attribute;
 import de.uni_mannheim.informatik.dws.winter.utils.WinterLogManager;
 
-public class Restaurant_DataFusion 
+public class DataFusion_Main 
 {
 	/*
 	 * Logging Options:
