@@ -45,15 +45,15 @@ public class Restaurant_DataFusion
 		// Load the Data into FusibleDataSet
 		logger.info("*\tLoading datasets\t*");
 		FusibleDataSet<Restaurant, Attribute> ds1 = new FusibleHashedDataSet<>();
-		new RestaurantXMLReader().loadFromXML(new File("data/input/michelin1_small.xml"), "/restaurants/restaurant", ds1); // path of the data set
+		new RestaurantXMLReader().loadFromXML(new File("data_fushion/data/input/michelin1_small.xml"), "/restaurants/restaurant", ds1); // path of the data set
 		ds1.printDataSetDensityReport(); // this gives the data set density report
 
 		FusibleDataSet<Restaurant, Attribute> ds2 = new FusibleHashedDataSet<>();
-		new RestaurantXMLReader().loadFromXML(new File("data/input/michelin2_small.xml"), "/restaurants/restaurant", ds2);
+		new RestaurantXMLReader().loadFromXML(new File("data_fushion/data/input/michelin2_small.xml"), "/restaurants/restaurant", ds2);
 		ds2.printDataSetDensityReport();
 
 		FusibleDataSet<Restaurant, Attribute> ds3 = new FusibleHashedDataSet<>();
-		new RestaurantXMLReader().loadFromXML(new File("data/input/michelin3_small.xml"), "/restaurants/restaurant", ds3);
+		new RestaurantXMLReader().loadFromXML(new File("data_fushion/data/input/michelin3_small.xml"), "/restaurants/restaurant", ds3);
 		ds3.printDataSetDensityReport();
 		
 //		System.out.println(ds1.size());
@@ -72,8 +72,8 @@ public class Restaurant_DataFusion
 		// load correspondences
 		logger.info("*\tLoading correspondences\t*");
 		CorrespondenceSet<Restaurant, Attribute> correspondences = new CorrespondenceSet<>();
-		correspondences.loadCorrespondences(new File("data/correspondences/michelin_tripadvisor_correspondences1.csv"),ds1, ds2);
-		correspondences.loadCorrespondences(new File("data/correspondences/bookuber_tripadvisor_correspondences1.csv"),ds2, ds3);
+		correspondences.loadCorrespondences(new File("data_fushion/data/correspondences/michelin_tripadvisor_correspondences_test.csv"),ds1, ds2);
+		correspondences.loadCorrespondences(new File("data_fushion/data/correspondences/bookuber_tripadvisor_correspondences_test.csv"),ds2, ds3);
 
 		// write group size distribution
 		correspondences.printGroupSizeDistribution(); // aggregated for group size distribution
@@ -81,7 +81,7 @@ public class Restaurant_DataFusion
 		// load the gold standard
 		logger.info("*\tEvaluating results\t*");
 		DataSet<Restaurant, Attribute> gs = new FusibleHashedDataSet<>();
-		new RestaurantXMLReader().loadFromXML(new File("data/goldstandard/test.xml"), "/restaurants/restaurant", gs);
+		new RestaurantXMLReader().loadFromXML(new File("data_fushion/data/goldstandard/test.xml"), "/restaurants/restaurant", gs);
 
 		for(Restaurant m : gs.get()) {
 			logger.info(String.format("gs: %s", m.getIdentifier()));
@@ -90,7 +90,7 @@ public class Restaurant_DataFusion
 		// define the fusion strategy
 		DataFusionStrategy<Restaurant, Attribute> strategy = new DataFusionStrategy<>(new RestaurantXMLReader());
 		// write debug results to file
-		strategy.activateDebugReport("data/output/debugResultsDatafusion.csv", -1, gs);
+		strategy.activateDebugReport("data_fushion/data/output/debugResultsDatafusion.csv", -1, gs);
 		
 		// add attribute fusers // these are the fusers we want
 		strategy.addAttributeFuser(Restaurant.NAME, new NameFuserLongestString(),new NameEvaluationRule());
@@ -106,14 +106,14 @@ public class Restaurant_DataFusion
 		
 		// print record groups sorted by consistency
 		// run this file and see your group consistencies
-		engine.writeRecordGroupsByConsistency(new File("data/output/recordGroupConsistencies.csv"), correspondences, null);
+		engine.writeRecordGroupsByConsistency(new File("data_fushion/data/output/recordGroupConsistencies.csv"), correspondences, null);
 
 		// run the fusion
 		logger.info("*\tRunning data fusion\t*");
 		FusibleDataSet<Restaurant, Attribute> fusedDataSet = engine.run(correspondences, null);
 
 		// write the result
-		new RestaurantXMLFormatter().writeXML(new File("data/output/fused.xml"), fusedDataSet);
+		new RestaurantXMLFormatter().writeXML(new File("data_fushion/data/output/fused.xml"), fusedDataSet);
 
 		// evaluate
 		DataFusionEvaluator<Restaurant, Attribute> evaluator = new DataFusionEvaluator<>(strategy, new RecordGroupFactory<Restaurant, Attribute>());
