@@ -45,10 +45,15 @@ public class RestaurantXMLReader extends XMLMatchableReader<Restaurant, Attribut
 	protected void initialiseDataset(DataSet<Restaurant, Attribute> dataset) {
 		super.initialiseDataset(dataset);
 
-		// the schema is defined in the Movie class and not interpreted from the file, so we have to set the attributes manually
+		// the schema is defined in the Movie class and not interpreted from the file,
+		// so we have to set the attributes manually
 		dataset.addAttribute(Restaurant.NAME);
 		dataset.addAttribute(Restaurant.CITY);
 		dataset.addAttribute(Restaurant.POSTAL_CODE);
+		dataset.addAttribute(Restaurant.STREET);
+		dataset.addAttribute(Restaurant.COUNTRY);
+		dataset.addAttribute(Restaurant.LATITUDE);
+		dataset.addAttribute(Restaurant.LONTITUDE);
 	}
 
 	@Override
@@ -60,16 +65,16 @@ public class RestaurantXMLReader extends XMLMatchableReader<Restaurant, Attribut
 
 		// fill the attributes
 		restaurant.setName(getValueFromChildElement(node, "name"));
-		
-//		String cuisineValues = getValueFromChildElement(node, "cuisine");
-//		List<String> listCuisine = 
-//		for(i =0;i<)
-//		restaurant.setCuisine(listCuisine);
+
+		// String cuisineValues = getValueFromChildElement(node, "cuisine");
+		// List<String> listCuisine =
+		// for(i =0;i<)
+		// restaurant.setCuisine(listCuisine);
 
 		restaurant.setCountry(getNonNullValueInLowerCase(getValueFromInsideChildElement(node, "location", "country")));
-		
+
 		restaurant.setCity(getNonNullValueInLowerCase(getValueFromInsideChildElement(node, "location", "city")));
-		
+
 		String postalCode = getNonNullValueInLowerCase(getValueFromInsideChildElement(node, "location", "postalcode"));
 		postalCode = postalCode.replace("-", "");
 		restaurant.setPostalcode(postalCode);
@@ -78,11 +83,28 @@ public class RestaurantXMLReader extends XMLMatchableReader<Restaurant, Attribut
 		streetName = streetName.replace("-", "");
 		restaurant.setStreet(streetName);
 
-		String latitude = getNonNullValueInLowerCase(getValueFromInsideChildOfChildElement(node, "location", "geographiclocation","latitude"));
-		System.out.println("latitude"+latitude);
+		String region = getNonNullValueInLowerCase(getValueFromInsideChildElement(node, "location", "region"));
+		restaurant.setRegion(region);
+		String province = getNonNullValueInLowerCase(getValueFromInsideChildElement(node, "location", "province"));
+		restaurant.setProvince(province);
 		
-		
-		System.out.println(id+" "+restaurant.getName()+" "+restaurant.getPostalcode()+" "+restaurant.getCountry());
+
+
+
+
+
+		String latitude = getNonNullValueInLowerCase(
+				getValueFromInsideChildOfChildElement(node, "location", "geographiclocation", "latitude"));
+		restaurant.setLatitude(latitude);
+				System.out.println("latitude" + latitude);
+
+		String longitude = getNonNullValueInLowerCase(
+				getValueFromInsideChildOfChildElement(node, "location", "geographiclocation", "longitude"));
+				restaurant.setLongitude(longitude);
+				System.out.println("longitude" + longitude);
+
+		System.out.println(
+				id + " " + restaurant.getName() + " " + restaurant.getPostalcode() + " " + restaurant.getCountry());
 
 		return restaurant;
 	}
@@ -122,7 +144,8 @@ public class RestaurantXMLReader extends XMLMatchableReader<Restaurant, Attribut
 		return null;
 	}
 
-	public String getValueFromInsideChildOfChildElement(Node node, String childName, String ChildOfChildName, String ChildOfChildOfChildName) {
+	public String getValueFromInsideChildOfChildElement(Node node, String childName, String ChildOfChildName,
+			String ChildOfChildOfChildName) {
 
 		// get all child nodes
 		NodeList children = node.getChildNodes();
@@ -131,39 +154,27 @@ public class RestaurantXMLReader extends XMLMatchableReader<Restaurant, Attribut
 		for (int j = 0; j < children.getLength(); j++) {
 			Node child = children.item(j);
 			// check the node type and the name
-			if (child.getNodeType() == org.w3c.dom.Node.ELEMENT_NODE && child.getNodeName().equals(childName))
-			{
+			if (child.getNodeType() == org.w3c.dom.Node.ELEMENT_NODE && child.getNodeName().equals(childName)) {
 
 				NodeList childrenofChild = child.getChildNodes();
-				for (int i = 0; i < childrenofChild.getLength(); i++)
-				{
+				for (int i = 0; i < childrenofChild.getLength(); i++) {
 					Node innerChild = childrenofChild.item(i);
 
 					if (innerChild.getNodeType() == org.w3c.dom.Node.ELEMENT_NODE
-							&& innerChild.getNodeName().equals(ChildOfChildName))
-					{
+							&& innerChild.getNodeName().equals(ChildOfChildName)) {
 
-								NodeList childrenofChildofChild = innerChild.getChildNodes();
+						NodeList childrenofChildofChild = innerChild.getChildNodes();
 
-								for (int k = 0;k < childrenofChildofChild.getLength(); k++)
-								{
-									Node innerOfInnerChild = childrenofChildofChild.item(k);
+						for (int k = 0; k < childrenofChildofChild.getLength(); k++) {
+							Node innerOfInnerChild = childrenofChildofChild.item(k);
 
-									if (innerOfInnerChild.getNodeType() == org.w3c.dom.Node.ELEMENT_NODE
-											&& innerOfInnerChild.getNodeName().equals(ChildOfChildOfChildName))
-									{
-												return innerOfInnerChild.getTextContent().trim();
-
-									}
-								}
+							if (innerOfInnerChild.getNodeType() == org.w3c.dom.Node.ELEMENT_NODE
+									&& innerOfInnerChild.getNodeName().equals(ChildOfChildOfChildName)) {
+								return innerOfInnerChild.getTextContent().trim();
+							}
+						}
 					}
-
 				}
-
-
-
-
-
 			}
 		}
 
@@ -174,7 +185,7 @@ public class RestaurantXMLReader extends XMLMatchableReader<Restaurant, Attribut
 	public Restaurant createInstanceForFusion(RecordGroup<Restaurant, Attribute> cluster) {
 
 		List<String> ids = new LinkedList<>();
-//		System.out.println("Coming in instance for fusion");
+		// System.out.println("Coming in instance for fusion");
 		for (Restaurant m : cluster.getRecords()) {
 			ids.add(m.getIdentifier());
 		}

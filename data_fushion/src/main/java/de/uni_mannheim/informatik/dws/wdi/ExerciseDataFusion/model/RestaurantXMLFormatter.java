@@ -94,8 +94,28 @@ public class RestaurantXMLFormatter extends XMLFormatter<Restaurant> {
 			location.appendChild(createTextElement("postalcode", record.getPostalcode(), doc));
 		
 		}
-		
 
+
+		if(record.getRegion()!=null) {
+			
+			location.appendChild(createTextElement("region", record.getRegion(), doc));
+		
+		}
+		if(record.getProvince()!=null) {
+			
+			location.appendChild(createTextElement("province", record.getProvince(), doc));
+		
+		}
+		if(record.getLatitude()!=null) {
+			
+			location.appendChild(createTextElement("latitude", record.getLatitude(), doc));
+		
+		}
+		if(record.getLongitude()!=null) {
+			
+			location.appendChild(createTextElement("longitude", record.getLongitude(), doc));
+		
+		}
 		return location;
 	}
 
