@@ -59,8 +59,8 @@ public class Restaurant extends AbstractRecord<Attribute> implements Serializabl
 	private String street;
 	private String region;
 	private String province;
-	private Double latitude;
-	private Double longitude;
+	private String latitude;
+	private String longitude;
 	private Integer reviewcount;
 	private Integer rating;
 	private String award;
@@ -172,19 +172,19 @@ public class Restaurant extends AbstractRecord<Attribute> implements Serializabl
 		this.province = province;
 	}
 
-	public double getLatitude() {
+	public String getLatitude() {
 		return latitude;
 	}
 
-	public void setLatitude(double latitude) {
+	public void setLatitude(String latitude) {
 		this.latitude = latitude;
 	}
 
-	public double getLongitude() {
+	public String getLongitude() {
 		return longitude;
 	}
 
-	public void setLongitude(double longitude) {
+	public void setLongitude(String longitude) {
 		this.longitude = longitude;
 	}
 
@@ -288,7 +288,13 @@ public class Restaurant extends AbstractRecord<Attribute> implements Serializabl
 	public static final Attribute POSTAL_CODE = new Attribute("Postal code");
 	public static final Attribute LOCATION = new Attribute("Location");
 	public static final Attribute COUNTRY = new Attribute("Country");
-	
+	public static final Attribute STREET = new Attribute(" Street");
+	public static final Attribute REGION = new Attribute("Region");
+	public static final Attribute PROVINCE = new Attribute("Province");
+	public static final Attribute LATITUDE = new Attribute("Latitude");
+	public static final Attribute LONGITUDE = new Attribute("Longitude");
+	// DEFINE here ======================================
+
 	@Override
 	public boolean hasValue(Attribute attribute) {
 		if(attribute==NAME)
@@ -299,6 +305,19 @@ public class Restaurant extends AbstractRecord<Attribute> implements Serializabl
 			return getPostalcode() != null;
 		else if(attribute==COUNTRY)
 			return getCountry() != null && !getCountry().isEmpty();
+		else if(attribute==STREET)
+			return getStreet() != null && !getStreet().isEmpty();
+		else if(attribute==REGION)
+			return getRegion() != null && !getRegion().isEmpty();
+		else if(attribute==PROVINCE)
+			return getProvince() != null && !getProvince().isEmpty();
+		else if(attribute==LATITUDE)
+			return getLatitude()+"" != null;
+		else if(attribute==LONGITUDE)
+			return getLongitude()+"" != null;
+		
+		
+		// Check here
 		else
 			return false;
 	}
