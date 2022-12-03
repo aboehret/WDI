@@ -47,7 +47,7 @@ public class Restaurant extends AbstractRecord<Attribute> implements Serializabl
 	private String name;
 //	private String cuisine; // List
 
-	private List<String> cuisine;
+	private String[] cuisine;
 
 	private String facilitiesandservices; // List
 	private String telephone;
@@ -84,11 +84,11 @@ public class Restaurant extends AbstractRecord<Attribute> implements Serializabl
 		this.name = name;
 	}
 
-	public List<String> getCuisine() {
+	public String[] getCuisine() {
 		return cuisine;
 	}
 
-	public void setCuisine(List<String> cuisine) {
+	public void setCuisine(String[] cuisine) {
 		this.cuisine = cuisine;
 	}
 
@@ -293,6 +293,10 @@ public class Restaurant extends AbstractRecord<Attribute> implements Serializabl
 	public static final Attribute PROVINCE = new Attribute("Province");
 	public static final Attribute LATITUDE = new Attribute("Latitude");
 	public static final Attribute LONGITUDE = new Attribute("Longitude");
+	public static final Attribute CUISINE = new Attribute("Cuisine");
+	public static final Attribute WEBSITE = new Attribute("Website");
+	public static final Attribute AWARD = new Attribute("Award");
+	
 	// DEFINE here ======================================
 
 	@Override
@@ -315,6 +319,12 @@ public class Restaurant extends AbstractRecord<Attribute> implements Serializabl
 			return getLatitude()+"" != null;
 		else if(attribute==LONGITUDE)
 			return getLongitude()+"" != null;
+		else if(attribute==CUISINE)
+			return getCuisine() != null ;
+		else if(attribute==WEBSITE)
+			return getWebsite() != null && !getWebsite().isEmpty();
+		else if(attribute==AWARD)
+			return getAward() != null && !getAward().isEmpty();
 		
 		
 		// Check here

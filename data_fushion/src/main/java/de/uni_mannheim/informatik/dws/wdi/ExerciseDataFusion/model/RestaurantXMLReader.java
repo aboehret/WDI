@@ -54,6 +54,10 @@ public class RestaurantXMLReader extends XMLMatchableReader<Restaurant, Attribut
 		dataset.addAttribute(Restaurant.COUNTRY);
 		dataset.addAttribute(Restaurant.LATITUDE);
 		dataset.addAttribute(Restaurant.LONGITUDE);
+		dataset.addAttribute(Restaurant.CUISINE);
+		dataset.addAttribute(Restaurant.WEBSITE);
+		dataset.addAttribute(Restaurant.AWARD);
+	
 	}
 
 	@Override
@@ -88,10 +92,21 @@ public class RestaurantXMLReader extends XMLMatchableReader<Restaurant, Attribut
 		String province = getNonNullValueInLowerCase(getValueFromInsideChildElement(node, "location", "province"));
 		restaurant.setProvince(province);
 		
+		if(getValueFromChildElement(node, "cuisine")!= null) {
+			String[] cuisineValues = (getValueFromChildElement(node, "cuisine").split(","));
+			for(int i=0;i<cuisineValues.length;i++) {
+				cuisineValues[i] = cuisineValues[i].replace("[", "");
+				cuisineValues[i] = cuisineValues[i].replace("]", "");
+				cuisineValues[i] = cuisineValues[i].replace("'", "");
+			}
+			restaurant.setCuisine(cuisineValues);
+		}
 
 
+		restaurant.setWebsite(getNonNullValueInLowerCase(getValueFromInsideChildElement(node, "contact", "website")));
 
-
+		restaurant.setCountry(getNonNullValueInLowerCase(getValueFromInsideChildElement(node, "location", "country")));
+		
 
 		String latitude = getNonNullValueInLowerCase(
 				getValueFromInsideChildOfChildElement(node, "location", "geographiclocation", "latitude"));
@@ -105,6 +120,8 @@ public class RestaurantXMLReader extends XMLMatchableReader<Restaurant, Attribut
 
 		System.out.println(
 				id + " " + restaurant.getName() + " " + restaurant.getPostalcode() + " " + restaurant.getCountry());
+		restaurant.setAward(getNonNullValueInLowerCase(getValueFromInsideChildElement(node, "ratings", "award")));
+		
 
 		return restaurant;
 	}
@@ -188,7 +205,7 @@ public class RestaurantXMLReader extends XMLMatchableReader<Restaurant, Attribut
 		// System.out.println("Coming in instance for fusion");
 		for (Restaurant m : cluster.getRecords()) {
 			ids.add(m.getIdentifier());
-		}
+		}               
 
 		Collections.sort(ids);
 

@@ -49,7 +49,19 @@ public class RestaurantXMLFormatter extends XMLFormatter<Restaurant> {
 //		restaurant.appendChild(createTextElementWithProvenance("city",
 //				record.getCity(),record.getMergedAttributeProvenance(Restaurant.CITY), doc));
 		
+		String cuisineValue = String.join(",", record.getCuisine());
+		if(cuisineValue.charAt(0) == ',') {
+			cuisineValue = cuisineValue.substring(1, cuisineValue.length());
+		}
+		restaurant.appendChild(createTextElement("cuisine",cuisineValue , doc));
+
+		restaurant.appendChild(createContactElement(record, doc));
+
+
 		restaurant.appendChild(createActorsElement(record, doc));
+
+		restaurant.appendChild(createRatingElement(record, doc));
+			
 
 		
 
@@ -117,6 +129,27 @@ public class RestaurantXMLFormatter extends XMLFormatter<Restaurant> {
 		
 		}
 		return location;
+	}
+	protected Element createContactElement(Restaurant record, Document doc) {
+		Element contact = doc.createElement("contact");
+		
+		if(record.getWebsite()!=null) {
+			contact.appendChild(createTextElementWithProvenance("website",
+					record.getWebsite(),record.getMergedAttributeProvenance(Restaurant.WEBSITE), doc));
+		}
+
+		return contact;
+	}
+	
+	protected Element createRatingElement(Restaurant record, Document doc) {
+		Element rating = doc.createElement("rating");
+		
+		if(record.getAward()!=null) {
+			rating.appendChild(createTextElementWithProvenance("award",
+					record.getAward(),record.getMergedAttributeProvenance(Restaurant.AWARD), doc));
+		}
+
+		return rating;
 	}
 
 

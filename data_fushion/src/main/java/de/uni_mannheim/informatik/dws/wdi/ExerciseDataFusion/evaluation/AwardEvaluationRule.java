@@ -26,16 +26,16 @@ import de.uni_mannheim.informatik.dws.winter.model.defaultmodel.Attribute;
  * @author Oliver Lehmberg (oli@dwslab.de)
  * 
  */
-public class LatitudeEvaluationRule extends EvaluationRule<Restaurant, Attribute> {
+public class AwardEvaluationRule extends EvaluationRule<Restaurant, Attribute> {
 
 	@Override
 	public boolean isEqual(Restaurant record1, Restaurant record2, Attribute schemaElement) {
-		if(record1.getLatitude()== null && record2.getLatitude()==null)
+		if(record1.getAward()== null && record2.getAward()==null)
 			return true;
-		else if(record1.getLatitude()== null ^ record2.getLatitude()==null)
+		else if(record1.getAward()== null ^ record2.getAward()==null)
 			return false;
 		else 
-			return record1.getLatitude().equals(record2.getLatitude());
+			return record1.getAward().equals(record2.getAward());
 	}
 
 	/* (non-Javadoc)
